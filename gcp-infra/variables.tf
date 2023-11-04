@@ -21,19 +21,16 @@ variable "subnet-region" {
 }
 
 //vm variables
-/*variable "vm-name" {
+variable "vm-name" {
   type = string
 }
-
-
-
 variable "vm-image" {
   type = string
 }
 
 variable "vm-zone" {
   type = string
-}*/
+}
 
 
 //service account variables
