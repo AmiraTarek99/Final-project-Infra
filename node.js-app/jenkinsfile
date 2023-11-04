@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+
+    environment {
+        GC_KEY = credentials('gcp-sa-terraform')
+    }
+    
+    stages {
+        stage('Git') {
+            steps {
+                git branch: 'main', url: 'https://github.com/AmiraTarek99/final-project.git'
+            }
+        }
+        
+        stage('deployment') {
+            steps {
+                sh("gcloud auth activate-service-account --key-file=${GC_KEY}")
+                sh "gcloud container clusters get-credentials private-cluster --region asia-east2 --project amira-gcp-402316"
+                
+                sh "ls"
+                sh "kubectl get nodes"
+                sh "kubectl apply -f ./node.js-app/mongodb/storage-class.yaml"
+                sh "kubectl apply -f ./node.js-app/mongodb/secret.yaml"
+                sh "kubectl apply -f ./node.js-app/mongodb/binding.yaml"
+                sh "kubectl apply -f ./node.js-app/mongodb/role.yaml"
+                sh "kubectl apply -f ./node.js-app/mongodb/serviceaccount.yaml"
+                sh "kubectl apply -f ./node.js-app/mongodb/finalstate.yaml"
+                sh "kubectl apply -f ./node.js-app/app/deployment.yaml"
+                sh "kubectl get pods"
+                //sh ""
+            }
+        }
+        
+    }
+}
