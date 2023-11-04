@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Git') {
             steps {
-                git branch: 'main', url: 'https://github.com/AmiraTarek99/final-project.git'
+                git branch: 'main', url: 'https://github.com/AmiraTarek99/Final-project-Infra.git'
             }
         }
         
